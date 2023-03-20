@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}
+  <h1>Our Menu</h1>
+  {% for product in products %}
+    <div>
+      <h2>{{ product.name }}</h2>
+      <p>{{ product.description }}</p>
+      <form action="" method="post">
+        <label><b>Size: </b>
+        <select name="size" id="size">
+          <option value="">Select a Size...</option>
+          {% for pid, size, price in choices %}
+            {% if product.id == pid %}
+            <option value="{{ price }}">{{ size }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+        </label><br><br>
+        <span aria-hidden="true"><b>Price: </b>
+          <span class="a-price-symbol">$</span>
+          <span class="a-price-whole" id="price-binding">
+          </span>
+        </span>
+      <!-- </form> -->
+      <br><br>
+      <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="post">
+        <input type="submit" value="Add to Cart">
+      </form>
+    </div>
+  {% endfor %}
+<script>
+  let selectTag = document.getElementById('size');
+  let spanTag = document.getElementById('price-binding');
+  // spanTag.innerText = selectTag.value
+  selectTag.addEventListener('change', function val() {
+      spanTag.innerText = this.value;
+    });
+</script>
+{% endblock %}    
+
