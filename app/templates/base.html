@@ -2,6 +2,43 @@
 <html>
 <head>
   <title>{% block title %}{% endblock %}</title>
+  <style>
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 20px;
+      /* margin-right: 20px; */
+      margin: 20px;
+      width: auto;
+      background-color: aquamarine;
+    }
+
+    #smenu {
+      margin: 10px;
+      padding: 10px;
+      width: 300px;
+      background-color: beige;
+    }
+
+    #smenu:hover {
+      background-color: darksalmon;
+    }
+
+    input[value="Add to Cart"] {
+      background-color: coral;
+    }
+
+    input[value="Add to Cart"]:hover {
+      background-color: red;
+    }
+
+    option {
+      outline: none;
+      padding: 20px;
+      margin: 20px;
+      width: 30px;
+    }
+  </style>
 </head>
 <body>
     <div><img src="{{ url_for('static', filename='villelogo.png') }}" alt="Ville Dishes" width=150 height=35>

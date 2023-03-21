@@ -4,8 +4,9 @@
 
 {% block content %}
   <h1>Our Menu</h1>
+  <div class="row" id="container">
   {% for product in products %}
-    <div>
+    <div class="col-lg-4 col-md-6 col-sm-12" id="smenu">
       <h2>{{ product.name }}</h2>
       <p>{{ product.description }}</p>
       <form action="" method="post">
@@ -30,7 +31,9 @@
         <input type="submit" value="Add to Cart">
       </form>
     </div>
+  
   {% endfor %}
+  </div>
 <script>
   let selectTag = document.getElementById('size');
   let spanTag = document.getElementById('price-binding');
