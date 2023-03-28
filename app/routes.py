@@ -5,19 +5,21 @@ from app.forms import LoginForm, RegistrationForm, Form
 from app.models import User, Product, CartItem, ProductQuantity
 
 @app.route('/')
-def index():
-    # products = Product.query.all()
-    return render_template('home.html')
-
-@app.route('/products')
 @login_required
-def products():
+def index():
     products = Product.query.all()
-    product_quantitys = ProductQuantity.query.all()
-    form = Form()
+    return render_template('home.html', products=products)
+
+@app.route('/product/<int:product_id>/', methods=['GET', 'POST'])
+@login_required
+def product(product_id):
+    product = Product.query.get_or_404(product_id)
+    product_quantitys = ProductQuantity.query.filter_by(product_id=product_id).all()
+    # form = Form()
     
     choices = [(item.product_id, item.size, item.price) for item in product_quantitys]
-    return render_template('products.html', products=products, choices=choices)
+    price_list = [z for x,y,z in choices]
+    return render_template('products.html', product_id=product.id, product=product, choices=choices, price_list=price_list)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -64,10 +66,20 @@ def cart():
 @login_required
 def add_to_cart(product_id):
     # productquantity_id = ProductQuantity.query.filter()
-    price = request.form.get['price']
-    item = CartItem(user_id=current_user.id, product_id=product_id, price=price)
+    product_id = request.form['product_id']
+    price = request.form['price'][1:]
+    productquantity_id = ProductQuantity.query.filter_by(price=price, product_id=product_id).first().id
+    # price = request.form['price']
+    item = CartItem(user_id=current_user.id, product_id=product_id, price=price, productquantity_id=productquantity_id)
     db.session.add(item)
     db.session.commit()
     flash('Item added to cart')
+    # return request.form['product_id']
     return redirect(url_for('cart'))
-#  <!-- <p><b>Price: </b>${{ product_quantity.price }}</p> -->
+
+
+
+
+#    <!-- <form action="{{ url_for('checkout') }}" method="post">
+#       <input type="submit" value="Checkout">
+#     </form> -->

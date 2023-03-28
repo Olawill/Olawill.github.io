@@ -4,43 +4,43 @@
 
 {% block content %}
   <h1>Our Menu</h1>
-  <div class="row" id="container">
-  {% for product in products %}
-    <div class="col-lg-4 col-md-6 col-sm-12" id="smenu">
-      <h2>{{ product.name }}</h2>
-      <p>{{ product.description }}</p>
-      <form action="" method="post">
+  <section class="container sproducts my-5 pt-5">
+    <div class="row mt-5" id="container">
+      <div class="col-lg-5 col-md-12 col-sm-12" id="spicture">
+        <img class="img-fluid w-100" src="/static/img/{{ product.id }}.png" alt="{{ product.name }}">
+      </div>
+      <div class="col-lg-6 col-md-12 col-sm-12" id="smenu">
+        <h2>{{ product.name }}</h2>
+        <p>{{ product.description }}</p>
+        {% if price_list|length > 1 %}
+        <h5 class="a-price-whole" id="price-binding" data-price="Price: " name="price">${{ '%.2f'|format(price_list | min) }} - {{ '%.2f'|format(price_list | max) }}</h5>
+        {% else %}
+        <h5 class="a-price-whole" id="price-binding" data-price="Price: " name="price">${{ '%.2f'|format(price_list | min) }}</h5>
+        {% endif %}
+        <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="post">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="product_id" value="{{ product.id }}">
+          <input type="hidden" name="name" value="{{ product.name }}">
         <label><b>Size: </b>
-        <select name="size" id="size">
-          <option value="">Select a Size...</option>
-          {% for pid, size, price in choices %}
-            {% if product.id == pid %}
-            <option value="{{ price }}">{{ size }}</option>
-            {% endif %}
-          {% endfor %}
-        </select>
-        </label><br><br>
-        <span aria-hidden="true"><b>Price: </b>
-          <span class="a-price-symbol">$</span>
-          <span class="a-price-whole" id="price-binding">
-          </span>
-        </span>
-      <!-- </form> -->
-      <br><br>
-      <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="post">
+          <Select name="price" id="size-select">
+            
+            <option>Select a size</option>
+            {% for pid, size, price in choices %}
+              {% if product.id == pid %}
+              <option value="{{ '$%.2f'|format(price) }}" id="price-size">{{ size }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+        </label>
+        
+        <br><br>
+        <label for="qty"><b>Quantity: </b>
+        <input id="" name="qty" type="number" value="1" min="1" max="100">
+        </label>
         <input type="submit" value="Add to Cart">
-      </form>
+        </form>
+      </div>
     </div>
-  
-  {% endfor %}
-  </div>
-<script>
-  let selectTag = document.getElementById('size');
-  let spanTag = document.getElementById('price-binding');
-  // spanTag.innerText = selectTag.value
-  selectTag.addEventListener('change', function val() {
-      spanTag.innerText = this.value;
-    });
-</script>
-{% endblock %}    
+  </section>
+  {% endblock %}
 

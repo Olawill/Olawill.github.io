@@ -10,6 +10,7 @@ import os
 from flask_bootstrap import Bootstrap
 # from flask_moment import Moment
 # from flask_babel import Babel
+from flask_wtf.csrf import CSRFProtect
 
 
 app = Flask(__name__,template_folder='./templates')
@@ -20,6 +21,8 @@ login = LoginManager(app)
 login.login_view = 'login'
 # mail = Mail(app)
 bootstrap = Bootstrap(app)
+csrf = CSRFProtect()
+csrf.init_app(app)
 # moment = Moment(app)
 # babel = Babel(app)
 

@@ -10,11 +10,10 @@
   {% else %}
     <ul>
       {% for item in cart_items %}
-        <li>{{ item.product.name }} - ${{ item.product.price }}</li>
+        <li>{{ item.product.name }} - ${{ '%.2f'|format(item.price) }}</li>
+        <hr>
       {% endfor %}
     </ul>
-    <form action="{{ url_for('checkout') }}" method="post">
-      <input type="submit" value="Checkout">
-    </form>
+ 
   {% endif %}
 {% endblock %}

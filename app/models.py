@@ -40,6 +40,14 @@ class ProductQuantity(db.Model):
     cart_items = db.relationship('CartItem', backref='product_quantity', lazy=True)
 
 
+    @property
+    def get_price(self, product_id, size):
+        variant = ProductQuantity.query.filter_by(product_id=product_id, size=size).all()
+        for item in variant:
+            item_price = item.price
+        return item_price
+
+
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))

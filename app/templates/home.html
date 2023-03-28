@@ -1,7 +1,17 @@
 {% extends 'base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Our Menu{% endblock %}
 
 {% block content %}
   <h1>Welcome to our E-commerce app!</h1>
+  <div class="row" id="container">
+    {% for prod in products %}
+      <div class="col-lg-4 col-md-6 col-sm-12" id="smenu" 
+      onclick=location.href="{{ url_for('product', product_id=prod.id) }}">
+        <a></a>
+        <h2><a id="product-name" href="{{ url_for('product', product_id=prod.id) }}">{{ prod.name }}</a></h2>
+        <p>{{ prod.description }}</p>
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}
