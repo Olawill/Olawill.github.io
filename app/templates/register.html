@@ -4,13 +4,17 @@
 {% block title %}Register{% endblock %}
 
 {% block content %}
-  <h1>Register</h1>
+<div class="registation-form">
+  <!-- <span class="borderLine"></span> -->
+  <h1 class="register">Register</h1>
   {% if error %}
     <p>{{ error }}</p>
   {% endif %}
-  <div class="row">
+  <div class="reg-row">
     <div class="col-md-4">
       {{ wtf.quick_form(form) }}
+      <p class="mt-5 mb-3 text-body-secondary">© Ville Dishes - 2023</p>
     </div>
   </div>
+</div>
 {% endblock %}

@@ -4,13 +4,20 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-  <h1>Login</h1>
-  {% if error %}
-    <p>{{ error }}</p>
-  {% endif %}
-  <div class="row">
-    <div class="col-md-4">
-      {{ wtf.quick_form(form) }}
+  <!-- <h1>Login</h1> -->
+  <main class="form-signin">
+    <span class="borderLine"></span>
+    {% if error %}
+      <p>{{ error }}</p>
+    {% endif %}
+    <div class="row" id="login-sm">
+      <div class="col-md-4">
+        <!-- <img class="mb-4" src="{{ url_for('static', filename='villelogo.png') }}" alt="" width="72" height="57"> -->
+        <h1 class="login">Login</h1>
+        {{ wtf.quick_form(form) }}
+        <p class="mt-5 mb-3 text-body-secondary">© Ville Dishes - 2023</p>
+      </div>
     </div>
-  </div>
+  </main>
+
 {% endblock %}
